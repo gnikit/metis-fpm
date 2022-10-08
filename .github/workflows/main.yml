@@ -1,0 +1,29 @@
+name: Update API
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  # Fire month
+  schedule:
+    - cron: "0 0 1 */1 *"
+
+jobs:
+  copy-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Update C Source files
+        run: |
+          bash update.sh
+        shell: bash
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: "gnikit"
+          author_email: giannis.nikiteas@gmail.com
+          message: "ci: update Gmsh API"
+          add: "."

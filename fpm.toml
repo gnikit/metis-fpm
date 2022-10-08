@@ -1,0 +1,20 @@
+name = "metis"
+version = "0.1.0"
+license = "license"
+author = "gnikit"
+maintainer = "gnikit@duck.com"
+copyright = "Copyright 2022, gnikit"
+
+[build]
+auto-executables = false
+auto-tests = false
+auto-examples = false
+
+[install]
+library = true
+
+[library]
+include-dir = ["src/metis/include"]
+
+[dependencies]
+gklib = { git = "https://github.com/gnikit/GKlib.git" }
