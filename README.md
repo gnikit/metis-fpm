@@ -19,7 +19,7 @@ To use `metis` as a dependency in your `fpm` project, add the following to your 
 
 ```toml
 [dependencies]
-gklib = { git = "https://github.com/gnikit/metis-fpm.git" }
+metis = { git = "https://github.com/gnikit/metis-fpm.git" }
 ```
 
 ## License
