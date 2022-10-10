@@ -18,3 +18,36 @@ include-dir = ["src/metis/include"]
 
 [dependencies]
 gklib = { git = "https://github.com/gnikit/GKlib.git" }
+
+[preprocess]
+cpp.macros = ["IDXTYPEWIDTH=64", "REALTYPEWIDTH=64"]
+
+[[executable]]
+name = "cmpfillin"
+main = "cmpfillin.c"
+source-dir = "app/cmpfillin"
+
+[[executable]]
+name = "gpmetis"
+main = "gpmetis.c"
+source-dir = "app/gpmetis"
+
+[[executable]]
+name = "graphchk"
+main = "graphchk.c"
+source-dir = "app/graphchk"
+
+[[executable]]
+name = "m2gmetis"
+main = "m2gmetis.c"
+source-dir = "app/m2gmetis"
+
+[[executable]]
+name = "mpmetis"
+main = "mpmetis.c"
+source-dir = "app/mpmetis"
+
+[[executable]]
+name = "ndmetis"
+main = "ndmetis.c"
+source-dir = "app/ndmetis"
