@@ -7,7 +7,7 @@ This provides a Fortran API and a source repackaging of the
 
 - [ ] Run tests in CI
 - [ ] Make CI open a PR for changes if the repository is dirty
-- [ ] Add Fortran API procedural and OOP interfaces
+- [ ] Add OOP API
 
 ## Usage
 
