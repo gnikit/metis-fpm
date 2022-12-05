@@ -37,8 +37,8 @@
  Specifies the data type that will hold floating-point style information.
 
  Possible values:
-   32 : single precission floating point (float)
-   64 : double precission floating point (double)
+   32 : single precision floating point (float)
+   64 : double precision floating point (double)
 --------------------------------------------------------------------------*/
 //#define REALTYPEWIDTH 32
 
@@ -156,8 +156,8 @@ typedef __int64 int64_t;
 *-------------------------------------------------------------------------*/
 /* Metis's version number */
 #define METIS_VER_MAJOR         5
-#define METIS_VER_MINOR         1
-#define METIS_VER_SUBMINOR      0
+#define METIS_VER_MINOR         2
+#define METIS_VER_SUBMINOR      1
 
 /* The maximum length of the options[] array */
 #define METIS_NOPTIONS          40

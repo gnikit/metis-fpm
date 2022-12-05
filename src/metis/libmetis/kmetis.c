@@ -67,12 +67,11 @@ int METIS_PartGraphKway(idx_t *nvtxs, idx_t *ncon, idx_t *xadj, idx_t *adjncy,
   IFSET(ctrl->dbglvl, METIS_DBG_TIME, InitTimers(ctrl));
   IFSET(ctrl->dbglvl, METIS_DBG_TIME, gk_startcputimer(ctrl->TotalTmr));
 
-  if (ctrl->dbglvl&512) {
-    *objval = BlockKWayPartitioning(ctrl, graph, part);
-  }
-  else {
-    *objval = MlevelKWayPartitioning(ctrl, graph, part);
-  }
+  iset(*nvtxs, 0, part);
+  if (ctrl->dbglvl&512)
+    *objval = (*nparts == 1 ? 0 : BlockKWayPartitioning(ctrl, graph, part));
+  else
+    *objval = (*nparts == 1 ? 0 : MlevelKWayPartitioning(ctrl, graph, part));
 
   IFSET(ctrl->dbglvl, METIS_DBG_TIME, gk_stopcputimer(ctrl->TotalTmr));
   IFSET(ctrl->dbglvl, METIS_DBG_TIME, PrintTimers(ctrl));
@@ -100,7 +99,7 @@ SIGTHROW:
     \param graph is the graph to be partitioned
     \param part is the vector that on return will store the partitioning
 
-    \returns the objective value of the partitoning. The partitioning 
+    \returns the objective value of the partitioning. The partitioning 
              itself is stored in the part vector.
 */
 /*************************************************************************/
@@ -256,7 +255,7 @@ void InitKWayPartitioning(ctrl_t *ctrl, graph_t *graph)
     \param graph is the graph to be partitioned
     \param part is the vector that on return will store the partitioning
 
-    \returns the objective value of the partitoning. The partitioning 
+    \returns the objective value of the partitioning. The partitioning 
              itself is stored in the part vector.
 */
 /*************************************************************************/
@@ -443,7 +442,7 @@ void BalanceAndRefineLP(ctrl_t *ctrl, graph_t *graph, idx_t nparts, idx_t *where
   /* for randomly visiting the vertices */
   perm = iincset(nvtxs, 0, iwspacemalloc(ctrl, nvtxs));
 
-  /* for keeping track of adjancent partitions */
+  /* for keeping track of adjacent partitions */
   nbrids  = iwspacemalloc(ctrl, nparts);
   nbrwgts = iset(nparts, 0, iwspacemalloc(ctrl, nparts));
   nbrmrks = iset(nparts, -1, iwspacemalloc(ctrl, nparts));
