@@ -15,7 +15,7 @@
 #ifndef _LIBMETIS_DEFS_H_
 #define _LIBMETIS_DEFS_H_
 
-#define METISTITLE              "METIS 5.2 Copyright 1998-16, Regents of the University of Minnesota\n"
+#define METISTITLE              "METIS 5.2.1 Copyright 1998-22, Regents of the University of Minnesota\n"
 #define MAXLINE			1280000
 
 #define LTERM			(void **) 0	/* List terminator for gk_free() */
@@ -45,7 +45,7 @@
 #define LARGENIPARTS		7	/* Number of random initial partitions */
 #define SMALLNIPARTS		5	/* Number of random initial partitions */
 
-#define COARSEN_FRACTION	0.85	/* Node reduction between succesive coarsening levels */
+#define COARSEN_FRACTION	0.85	/* Node reduction between successive coarsening levels */
 
 #define COMPRESSION_FRACTION		0.85
 
