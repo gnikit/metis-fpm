@@ -20,97 +20,97 @@ module metis_c_interface
 #error "Incorrect user-supplied value for REALTYPEWIDTH"
 #endif
 
-   integer(idx_t), parameter :: METIS_VER_MAJOR = 5
-   integer(idx_t), parameter :: METIS_VER_MINOR = 1
-   integer(idx_t), parameter :: METIS_VER_SUBMINOR = 0
+   integer(idx_t), parameter, public :: METIS_VER_MAJOR = 5
+   integer(idx_t), parameter, public :: METIS_VER_MINOR = 1
+   integer(idx_t), parameter, public :: METIS_VER_SUBMINOR = 0
 
    ! The maximum length of the options[] array
-   integer(idx_t), parameter :: METIS_NOPTIONS = 40
+   integer(idx_t), parameter, public :: METIS_NOPTIONS = 40
 
    ! Return codes ! rstatus_et
-   integer(idx_t) :: METIS_OK              = 1
-   integer(idx_t) :: METIS_ERROR_INPUT     = -2
-   integer(idx_t) :: METIS_ERROR_MEMORY    = -3
-   integer(idx_t) :: METIS_ERROR           = -4
+   integer(idx_t), public :: METIS_OK              = 1
+   integer(idx_t), public :: METIS_ERROR_INPUT     = -2
+   integer(idx_t), public :: METIS_ERROR_MEMORY    = -3
+   integer(idx_t), public :: METIS_ERROR           = -4
 
    ! Operation type codes ! moptype_et
-   integer(idx_t) :: METIS_OP_PMETIS = 0
-   integer(idx_t) :: METIS_OP_KMETIS = 1
-   integer(idx_t) :: METIS_OP_OMETIS = 2
+   integer(idx_t), public :: METIS_OP_PMETIS = 0
+   integer(idx_t), public :: METIS_OP_KMETIS = 1
+   integer(idx_t), public :: METIS_OP_OMETIS = 2
 
    ! Options codes (i.e., options[]) ! moptions_et
-   integer(idx_t) :: METIS_OPTION_PTYPE = 0
-   integer(idx_t) :: METIS_OPTION_OBJTYPE = 1
-   integer(idx_t) :: METIS_OPTION_CTYPE = 2
-   integer(idx_t) :: METIS_OPTION_IPTYPE = 3
-   integer(idx_t) :: METIS_OPTION_RTYPE = 4
-   integer(idx_t) :: METIS_OPTION_DBGLVL = 5
-   integer(idx_t) :: METIS_OPTION_NIPARTS = 6
-   integer(idx_t) :: METIS_OPTION_NITER = 7
-   integer(idx_t) :: METIS_OPTION_NCUTS = 8
-   integer(idx_t) :: METIS_OPTION_SEED = 9
-   integer(idx_t) :: METIS_OPTION_NO2HOP = 10
-   integer(idx_t) :: METIS_OPTION_ONDISK = 11
-   integer(idx_t) :: METIS_OPTION_MINCONN = 12
-   integer(idx_t) :: METIS_OPTION_CONTIG = 13
-   integer(idx_t) :: METIS_OPTION_COMPRESS = 14
-   integer(idx_t) :: METIS_OPTION_CCORDER = 15
-   integer(idx_t) :: METIS_OPTION_PFACTOR = 16
-   integer(idx_t) :: METIS_OPTION_NSEPS = 17
-   integer(idx_t) :: METIS_OPTION_UFACTOR = 18
-   integer(idx_t) :: METIS_OPTION_NUMBERING = 19
-   integer(idx_t) :: METIS_OPTION_DROPEDGES = 20
+   integer(idx_t), public :: METIS_OPTION_PTYPE = 0
+   integer(idx_t), public :: METIS_OPTION_OBJTYPE = 1
+   integer(idx_t), public :: METIS_OPTION_CTYPE = 2
+   integer(idx_t), public :: METIS_OPTION_IPTYPE = 3
+   integer(idx_t), public :: METIS_OPTION_RTYPE = 4
+   integer(idx_t), public :: METIS_OPTION_DBGLVL = 5
+   integer(idx_t), public :: METIS_OPTION_NIPARTS = 6
+   integer(idx_t), public :: METIS_OPTION_NITER = 7
+   integer(idx_t), public :: METIS_OPTION_NCUTS = 8
+   integer(idx_t), public :: METIS_OPTION_SEED = 9
+   integer(idx_t), public :: METIS_OPTION_NO2HOP = 10
+   integer(idx_t), public :: METIS_OPTION_ONDISK = 11
+   integer(idx_t), public :: METIS_OPTION_MINCONN = 12
+   integer(idx_t), public :: METIS_OPTION_CONTIG = 13
+   integer(idx_t), public :: METIS_OPTION_COMPRESS = 14
+   integer(idx_t), public :: METIS_OPTION_CCORDER = 15
+   integer(idx_t), public :: METIS_OPTION_PFACTOR = 16
+   integer(idx_t), public :: METIS_OPTION_NSEPS = 17
+   integer(idx_t), public :: METIS_OPTION_UFACTOR = 18
+   integer(idx_t), public :: METIS_OPTION_NUMBERING = 19
+   integer(idx_t), public :: METIS_OPTION_DROPEDGES = 20
 
    ! Used for command-line parameter purposes
-   integer(idx_t) :: METIS_OPTION_HELP = 21
-   integer(idx_t) :: METIS_OPTION_TPWGTS = 22
-   integer(idx_t) :: METIS_OPTION_NCOMMON = 23
-   integer(idx_t) :: METIS_OPTION_NOOUTPUT = 24
-   integer(idx_t) :: METIS_OPTION_BALANCE = 25
-   integer(idx_t) :: METIS_OPTION_GTYPE = 26
-   integer(idx_t) :: METIS_OPTION_UBVE = 27
+   integer(idx_t), public :: METIS_OPTION_HELP = 21
+   integer(idx_t), public :: METIS_OPTION_TPWGTS = 22
+   integer(idx_t), public :: METIS_OPTION_NCOMMON = 23
+   integer(idx_t), public :: METIS_OPTION_NOOUTPUT = 24
+   integer(idx_t), public :: METIS_OPTION_BALANCE = 25
+   integer(idx_t), public :: METIS_OPTION_GTYPE = 26
+   integer(idx_t), public :: METIS_OPTION_UBVE = 27
 
    ! Partitioning Schemes ! mptype_et
-   integer(idx_t) :: METIS_PTYPE_RB = 0
-   integer(idx_t) :: METIS_PTYPE_KWAY = 1
+   integer(idx_t), public :: METIS_PTYPE_RB = 0
+   integer(idx_t), public :: METIS_PTYPE_KWAY = 1
 
    ! Graph types for meshes ! mgtype_et
-   integer(idx_t) :: METIS_GTYPE_DUAL = 0
-   integer(idx_t) :: METIS_GTYPE_NODAL = 1
+   integer(idx_t), public :: METIS_GTYPE_DUAL = 0
+   integer(idx_t), public :: METIS_GTYPE_NODAL = 1
 
    ! Coarsening Schemes ! mctype_et
-   integer(idx_t) :: METIS_CTYPE_RM = 0
-   integer(idx_t) :: METIS_CTYPE_SHEM = 1
+   integer(idx_t), public :: METIS_CTYPE_RM = 0
+   integer(idx_t), public :: METIS_CTYPE_SHEM = 1
 
    ! Initial partitioning schemes ! miptype_et
-   integer(idx_t) :: METIS_IPTYPE_GROW = 0
-   integer(idx_t) :: METIS_IPTYPE_RANDOM = 1
-   integer(idx_t) :: METIS_IPTYPE_EDGE = 2
-   integer(idx_t) :: METIS_IPTYPE_NODE = 3
-   integer(idx_t) :: METIS_IPTYPE_METISRB = 4
+   integer(idx_t), public :: METIS_IPTYPE_GROW = 0
+   integer(idx_t), public :: METIS_IPTYPE_RANDOM = 1
+   integer(idx_t), public :: METIS_IPTYPE_EDGE = 2
+   integer(idx_t), public :: METIS_IPTYPE_NODE = 3
+   integer(idx_t), public :: METIS_IPTYPE_METISRB = 4
 
    ! Refinement schemes ! mrtype_et
-   integer(idx_t) :: METIS_RTYPE_FM = 0
-   integer(idx_t) :: METIS_RTYPE_GREEDY = 1
-   integer(idx_t) :: METIS_RTYPE_SEP2SIDED = 2
-   integer(idx_t) :: METIS_RTYPE_SEP1SIDED = 3
+   integer(idx_t), public :: METIS_RTYPE_FM = 0
+   integer(idx_t), public :: METIS_RTYPE_GREEDY = 1
+   integer(idx_t), public :: METIS_RTYPE_SEP2SIDED = 2
+   integer(idx_t), public :: METIS_RTYPE_SEP1SIDED = 3
 
    ! Debug Levels ! mdbglvl_et
-   integer(idx_t) :: METIS_DBG_INFO       = 1    !< Shows various diagnostic messages
-   integer(idx_t) :: METIS_DBG_TIME       = 2    !< Perform timing analysis
-   integer(idx_t) :: METIS_DBG_COARSEN    = 4	 !< Show the coarsening progress
-   integer(idx_t) :: METIS_DBG_REFINE     = 8	 !< Show the refinement progress
-   integer(idx_t) :: METIS_DBG_IPART      = 16 	 !< Show info on initial partitioning
-   integer(idx_t) :: METIS_DBG_MOVEINFO   = 32 	 !< Show info on vertex moves during refinement
-   integer(idx_t) :: METIS_DBG_SEPINFO    = 64 	 !< Show info on vertex moves during sep refinement
-   integer(idx_t) :: METIS_DBG_CONNINFO   = 128  !< Show info on minimization of subdomain connectivity
-   integer(idx_t) :: METIS_DBG_CONTIGINFO = 256  !< Show info on elimination of connected components
-   integer(idx_t) :: METIS_DBG_MEMORY     = 2048 !< Show info related to wspace allocation
+   integer(idx_t), public :: METIS_DBG_INFO       = 1    !< Shows various diagnostic messages
+   integer(idx_t), public :: METIS_DBG_TIME       = 2    !< Perform timing analysis
+   integer(idx_t), public :: METIS_DBG_COARSEN    = 4	 !< Show the coarsening progress
+   integer(idx_t), public :: METIS_DBG_REFINE     = 8	 !< Show the refinement progress
+   integer(idx_t), public :: METIS_DBG_IPART      = 16 	 !< Show info on initial partitioning
+   integer(idx_t), public :: METIS_DBG_MOVEINFO   = 32 	 !< Show info on vertex moves during refinement
+   integer(idx_t), public :: METIS_DBG_SEPINFO    = 64 	 !< Show info on vertex moves during sep refinement
+   integer(idx_t), public :: METIS_DBG_CONNINFO   = 128  !< Show info on minimization of subdomain connectivity
+   integer(idx_t), public :: METIS_DBG_CONTIGINFO = 256  !< Show info on elimination of connected components
+   integer(idx_t), public :: METIS_DBG_MEMORY     = 2048 !< Show info related to wspace allocation
 
    ! Types of objectives ! mobjtype_et
-   integer(idx_t) :: METIS_OBJTYPE_CUT = 0
-   integer(idx_t) :: METIS_OBJTYPE_VOL = 1
-   integer(idx_t) :: METIS_OBJTYPE_NODE = 2
+   integer(idx_t), public :: METIS_OBJTYPE_CUT = 0
+   integer(idx_t), public :: METIS_OBJTYPE_VOL = 1
+   integer(idx_t), public :: METIS_OBJTYPE_NODE = 2
 
    ! C API
    !=======================================================================
