@@ -484,8 +484,8 @@ void SplitGraphOrder(ctrl_t *ctrl, graph_t *graph, graph_t **r_lgraph,
     iend   = xadj[i+1];
     if (bndptr[i] == -1) { /* This is an interior vertex */
       auxadjncy = sadjncy[mypart] + snedges[mypart] - istart;
-      for(j=istart; j<iend; j++) 
-        auxadjncy[j] = adjncy[j];
+      for(j=istart; j<iend; j++)
+        auxadjncy[j] = rename[adjncy[j]];
       snedges[mypart] += iend-istart;
     }
     else {
@@ -493,8 +493,8 @@ void SplitGraphOrder(ctrl_t *ctrl, graph_t *graph, graph_t **r_lgraph,
       l = snedges[mypart];
       for (j=istart; j<iend; j++) {
         k = adjncy[j];
-        if (where[k] == mypart) 
-          auxadjncy[l++] = k;
+        if (where[k] == mypart)
+          auxadjncy[l++] = rename[k];
       }
       snedges[mypart] = l;
     }
@@ -504,14 +504,9 @@ void SplitGraphOrder(ctrl_t *ctrl, graph_t *graph, graph_t **r_lgraph,
     sxadj[mypart][++snvtxs[mypart]]  = snedges[mypart];
   }
 
-  for (mypart=0; mypart<2; mypart++) {
-    iend = snedges[mypart];
-    iset(iend, 1, sadjwgt[mypart]);
-
-    auxadjncy = sadjncy[mypart];
-    for (i=0; i<iend; i++) 
-      auxadjncy[i] = rename[auxadjncy[i]];
-  }
+  /* adjwgt is all-1 in the ND path; rename was applied inline during extraction */
+  for (mypart=0; mypart<2; mypart++)
+    iset(snedges[mypart], 1, sadjwgt[mypart]);
 
   lgraph->nvtxs  = snvtxs[0];
   lgraph->nedges = snedges[0];
@@ -611,16 +606,16 @@ graph_t **SplitGraphOrderCC(ctrl_t *ctrl, graph_t *graph, idx_t ncmps,
       iend   = xadj[i+1];
       if (bndptr[i] == -1) { /* This is an interior vertex */
         auxadjncy = sadjncy + snedges - istart;
-        for(j=istart; j<iend; j++) 
-          auxadjncy[j] = adjncy[j];
+        for(j=istart; j<iend; j++)
+          auxadjncy[j] = rename[adjncy[j]];
         snedges += iend-istart;
       }
       else {
         l = snedges;
         for (j=istart; j<iend; j++) {
           k = adjncy[j];
-          if (where[k] != 2) 
-            sadjncy[l++] = k;
+          if (where[k] != 2)
+            sadjncy[l++] = rename[k];
         }
         snedges = l;
       }
@@ -630,9 +625,7 @@ graph_t **SplitGraphOrderCC(ctrl_t *ctrl, graph_t *graph, idx_t ncmps,
       sxadj[++snvtxs]  = snedges;
     }
 
-    iset(snedges, 1, sadjwgt);
-    for (i=0; i<snedges; i++) 
-      sadjncy[i] = rename[sadjncy[i]];
+    iset(snedges, 1, sadjwgt);  /* rename applied inline during extraction above */
 
     sgraphs[iii]->nvtxs  = snvtxs;
     sgraphs[iii]->nedges = snedges;
@@ -685,12 +678,8 @@ void MMDOrder(ctrl_t *ctrl, graph_t *graph, idx_t *order, idx_t lastvtx)
   for (i=0; i<nvtxs; i++)
     order[label[i]] = firstvtx+iperm[i]-1;
 
-  /* Relabel the vertices so that it starts from 0 */
-  for (i=0; i<nvtxs+1; i++)
-    xadj[i]--;
-  k = xadj[nvtxs];
-  for (i=0; i<k; i++)
-    adjncy[i]--;
+  /* No need to restore xadj/adjncy to 0-based: genmmd destroys adjncy in place,
+   * and every caller frees this graph immediately after MMDOrder returns. */
 
   WCOREPOP;
 }
