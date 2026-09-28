@@ -177,7 +177,7 @@
      \
      if (me == to || me == from || oldnnbrs != myrinfo->nnbrs) {  \
        rgain = (myrinfo->nnbrs > 0 ?  \
-                1.0*myrinfo->ed/sqrt(myrinfo->nnbrs) : 0.0) - myrinfo->id; \
+                1.0*myrinfo->ed/ctrl->cnbrsqrt[myrinfo->nnbrs] : 0.0) - myrinfo->id; \
    \
        if (bndtype == BNDTYPE_REFINE) { \
          if (vstatus[(vid)] == VPQSTATUS_PRESENT) { \
