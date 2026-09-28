@@ -162,11 +162,9 @@ idx_t MlevelRecursiveBisection(ctrl_t *ctrl, graph_t *graph, idx_t nparts,
   graph_t *lgraph, *rgraph;
   real_t wsum, *tpwgts2;
 
-  if ((nvtxs = graph->nvtxs) == 0) {
-    printf("\t***Cannot bisect a graph with 0 vertices!\n"
-           "\t***You are trying to partition a graph into too many parts!\n");
-    return 0;
-  }
+  if ((nvtxs = graph->nvtxs) == 0)
+    gk_errexit(SIGERR, "***Cannot bisect a graph with 0 vertices!\n"
+                       "***You are trying to partition a graph into too many parts.\n");
 
   ncon = graph->ncon;
 
@@ -337,8 +335,8 @@ void SplitGraphPart(ctrl_t *ctrl, graph_t *graph, graph_t **r_lgraph,
       auxadjncy = sadjncy[mypart] + snedges[mypart] - istart;
       auxadjwgt = sadjwgt[mypart] + snedges[mypart] - istart;
       for(j=istart; j<iend; j++) {
-        auxadjncy[j] = adjncy[j];
-        auxadjwgt[j] = adjwgt[j]; 
+        auxadjncy[j] = rename[adjncy[j]];
+        auxadjwgt[j] = adjwgt[j];
       }
       snedges[mypart] += iend-istart;
     }
@@ -349,8 +347,8 @@ void SplitGraphPart(ctrl_t *ctrl, graph_t *graph, graph_t **r_lgraph,
       for (j=istart; j<iend; j++) {
         k = adjncy[j];
         if (where[k] == mypart) {
-          auxadjncy[l] = k;
-          auxadjwgt[l++] = adjwgt[j]; 
+          auxadjncy[l] = rename[k];
+          auxadjwgt[l++] = adjwgt[j];
         }
       }
       snedges[mypart] = l;
@@ -364,12 +362,7 @@ void SplitGraphPart(ctrl_t *ctrl, graph_t *graph, graph_t **r_lgraph,
     sxadj[mypart][++snvtxs[mypart]]  = snedges[mypart];
   }
 
-  for (mypart=0; mypart<2; mypart++) {
-    iend = sxadj[mypart][snvtxs[mypart]];
-    auxadjncy = sadjncy[mypart];
-    for (i=0; i<iend; i++) 
-      auxadjncy[i] = rename[auxadjncy[i]];
-  }
+  /* rename was applied inline during extraction above */
 
   lgraph->nedges = snedges[0];
   rgraph->nedges = snedges[1];
