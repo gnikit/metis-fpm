@@ -133,7 +133,7 @@ int CheckInputGraphWeights(idx_t nvtxs, idx_t ncon, idx_t *xadj, idx_t *adjncy,
   }
 
   if (vwgt) {
-    for (i=ncon*nvtxs; i>=0; i--) {
+    for (i=ncon*nvtxs-1; i>=0; i--) {
       if (vwgt[i] < 0) {
         printf("Input Error: negative vertex weight(s).\n");
         return 0;
@@ -141,7 +141,7 @@ int CheckInputGraphWeights(idx_t nvtxs, idx_t ncon, idx_t *xadj, idx_t *adjncy,
     }
   }
   if (vsize) {
-    for (i=nvtxs; i>=0; i--) {
+    for (i=nvtxs-1; i>=0; i--) {
       if (vsize[i] < 0) {
         printf("Input Error: negative vertex sizes(s).\n");
         return 0;
