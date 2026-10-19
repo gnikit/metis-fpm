@@ -76,11 +76,28 @@ graph_t *CompressGraph(ctrl_t *ctrl, idx_t nvtxs, idx_t *xadj, idx_t *adjncy,
       }
 
       cptr[++cnvtxs] = l;
+
+      /* cnvtxs only grows, so once it reaches the rejection threshold the graph
+         is provably incompressible; stop the (verification-heavy) scan early.
+         Same predicate as the post-loop test, so the accept/reject decision and
+         all output are unchanged -- only the reject-path group count stops short.
+         This is the sole break in the outer loop, so afterward i<nvtxs iff we
+         aborted here (i==nvtxs on normal completion). */
+      if (cnvtxs >= COMPRESSION_FRACTION*nvtxs)
+        break;
     }
   }
 
-  IFSET(ctrl->dbglvl, METIS_DBG_INFO, 
-        printf("  Compression: reduction in # of vertices: %"PRIDX".\n", nvtxs-cnvtxs)); 
+  /* i < nvtxs means the loop aborted early (graph incompressible): cnvtxs is then
+     only a partial group count (the true final count would be larger), so
+     nvtxs-cnvtxs OVERSTATES the reduction -- it is an upper bound, not the exact
+     value. Mark it '<= ... (approx)' rather than scanning on to make it exact, since
+     the graph is rejected as incompressible either way. On the accept path the loop
+     always completes (i == nvtxs), so the figure is exact and printed unmarked. */
+  IFSET(ctrl->dbglvl, METIS_DBG_INFO,
+        printf("  Compression: reduction in # of vertices: %s%"PRIDX"%s.\n",
+               (i < nvtxs ? "<=" : ""), nvtxs-cnvtxs,
+               (i < nvtxs ? " (approx; incompressible, scan stopped early)" : "")));
 
 
   if (cnvtxs < COMPRESSION_FRACTION*nvtxs) {
@@ -109,10 +126,10 @@ graph_t *CompressGraph(ctrl_t *ctrl, idx_t nvtxs, idx_t *xadj, idx_t *adjncy,
       for (j=cptr[i]; j<cptr[i+1]; j++) {
         ii = cind[j];
 
-        /* accumulate the vertex weights of the consistuent vertices */
+        /* accumulate the vertex weights of the constituent vertices */
         cvwgt[i] += (vwgt == NULL ? 1 : vwgt[ii]);
 
-        /* generate the combined adjancency list */
+        /* generate the combined adjacency list */
         for (jj=xadj[ii]; jj<xadj[ii+1]; jj++) {
           k = map[adjncy[jj]];
           if (mark[k] != i) {
