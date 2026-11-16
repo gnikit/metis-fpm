@@ -204,6 +204,20 @@ typedef struct ctrl_t {
                              The size and current position of the pool is controlled
                              by nnbrs & cnbrs */
 
+  double *cnbrsqrt;     /*!< Precomputed lookup table cnbrsqrt[k] = sqrt((double)k) for
+                             k in [0,nparts], indexed by ckrinfo_t.nnbrs. Replaces the
+                             per-evaluation libm sqrt() in the k-way *cut* gain priority
+                             ed/sqrt(nnbrs), which is computed once per boundary vertex per
+                             refinement pass and once per adjacent vertex per move (see
+                             Greedy_KWayCutOptimize / Greedy_McKWayCutOptimize in kwayfm.c
+                             and the UpdateQueueInfo macro in macros.h).
+                             MUST stay double (not real_t): the division ed/sqrt(nnbrs) is
+                             evaluated in double before being narrowed into rgain, so a
+                             double table reproduces the exact IEEE result and keeps output
+                             bit-identical to the inline-sqrt version. A float table would
+                             silently change partitions. Allocated/freed with the refinement
+                             workspace; unused by the volume objective. */
+
   /* The subdomain graph, in sparse format  */ 
   idx_t *maxnads;               /* The maximum allocated number of adjacent domains */
   idx_t *nads;                  /* The number of adjacent domains */
